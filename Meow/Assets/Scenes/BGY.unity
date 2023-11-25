@@ -319,6 +319,8 @@ MonoBehaviour:
   movespeed: 5
   JumpPower: 8
   isLongJump: 0
+  isJumping: 0
+  jumpCount: 0
 --- !u!1 &704001888 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2324408108215060780, guid: 1a416bfa19898b14ea0e219d218e4705, type: 3}
@@ -726,7 +728,7 @@ GameObject:
   - component: {fileID: 1434583436}
   m_Layer: 0
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

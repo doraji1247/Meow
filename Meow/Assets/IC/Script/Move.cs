@@ -8,19 +8,17 @@ public class Move : MonoBehaviour
     private float movespeed;
     public float JumpPower;
     public bool isLongJump = false; //낮은 점프, 높은 점프 제어
+    public bool isJumping = false;
+    public float jumpCount;
 
     Rigidbody2D rb;
 
     int health = 3;
 
-    //void Start()
-    //{
-
-    //}
-
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        jumpCount = 1;
     }
 
     void Update()
@@ -33,14 +31,18 @@ public class Move : MonoBehaviour
         {
             this.transform.Translate(Vector3.left * Time.deltaTime * movespeed);
         }
-        if(Input.GetKeyDown(KeyCode.Space)) 
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Jump();
-            isLongJump = true;
+            if(isJumping == false) 
+            { 
+                isJumping = true;
+                GetComponent<Rigidbody2D>().AddForce(Vector3.up * 450f);
+                isLongJump = true;
+            }
         }
-        else if(Input.GetKeyUp(KeyCode.Space)) 
+        else if (Input.GetKeyUp(KeyCode.Space))
         {
-            isLongJump= false;
+            isLongJump = false;
         }
     }
 
@@ -61,9 +63,9 @@ public class Move : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D col)
     {
-        if(collision.gameObject.CompareTag("Box"))
+        if(col.gameObject.tag == "Box")
         {
             Debug.Log("박스");
             if(health > 0)
@@ -75,6 +77,11 @@ public class Move : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+        }
+
+        if(col.gameObject.tag == "ground")
+        {
+            isJumping = false;
         }
     }
 }
